@@ -1,19 +1,13 @@
-# PalindromeCheckerApp
+## Use Case 2 – Hardcoded Palindrome Check
 
-## Objective
-To create a Java program that checks whether a given string is a palindrome using Git and GitHub workflow.
+### Description
+This use case checks whether a predefined (hardcoded) string is a palindrome.
 
-## Project Flow
-- Created GitHub repository.
-- Cloned repository to local system.
-- Opened project in IntelliJ IDEA.
-- Created App module and Java class.
-- Implemented palindrome logic.
-- Added, committed, and pushed files using Git.
-- Created pull request and merged to main branch.
+### Logic
+- A string value is hardcoded in the program.
+- The string is reversed using a loop.
+- Original and reversed strings are compared.
+- Displays whether it is Palindrome or Not Palindrome.
 
-## Use Case 1
-Checks whether the user entered string is a palindrome or not.
-
-## Output
-Palindrome / Not Palindrome
+### Output
+madam is PalindromeNot Palindrome
