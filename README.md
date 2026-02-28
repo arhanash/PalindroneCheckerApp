@@ -1,16 +1,13 @@
-UC4: Character Array Based Palindrome Check
 
-Goal: Convert string to character array and compare characters.
-
+UC5: Stack-Based Palindrome Checker
+Goal: Use stack to reverse characters and validate palindrome.
 Flow:
-Convert string to char[]
-Use two-pointer approach
-Compare start & end characters
-
-Key Concepts used in UC4:
-Character Array (char[]) – A primitive array used to store individual characters of a string for index-based access.
-Array Indexing – Accessing elements using index positions starting from 0.
-Two-Pointer Technique – One pointer starts from the beginning and the other from the end, reducing unnecessary comparisons.
-Time Complexity Awareness – Demonstrates efficient comparison without creating extra objects.
-
-Data Structure: char[]
+Push characters into stack
+Pop and compare
+Print result
+Key Concepts used in UC5:
+Stack – A linear data structure that follows the Last In First Out (LIFO) principle.
+Push Operation – Used to insert characters into the stack.
+Pop Operation – Used to remove characters from the stack in reverse order.
+Reversal Logic – Stack naturally reverses the order of elements, making it suitable for palindrome validation.
+Data Structure: Stack
