@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class UseCase6PalindromeCheckerApp {
+public class UseCase7DequePalindromeCheckerApp {
 
     public static void main(String[] args) {
 
@@ -9,34 +9,31 @@ public class UseCase6PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        // Convert to lowercase and remove spaces
+        // Normalize input (remove spaces and convert to lowercase)
         input = input.replaceAll("\\s+", "").toLowerCase();
 
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Insert characters into queue and stack
+        // Insert characters into deque
         for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            queue.add(ch);     // enqueue
-            stack.push(ch);    // push
+            deque.addLast(input.charAt(i));
         }
 
         boolean isPalindrome = true;
 
-        // Compare dequeue vs pop
-        while (!queue.isEmpty()) {
+        // Compare front and rear characters
+        while (deque.size() > 1) {
 
-            char qChar = queue.remove(); // dequeue
-            char sChar = stack.pop();    // pop
+            char front = deque.removeFirst();  // remove from front
+            char rear = deque.removeLast();    // remove from rear
 
-            if (qChar != sChar) {
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Result
+        // Display result
         if (isPalindrome) {
             System.out.println("The given string is a Palindrome.");
         } else {
