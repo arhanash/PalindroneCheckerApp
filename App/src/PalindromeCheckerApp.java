@@ -1,17 +1,11 @@
 import java.util.*;
 
-// Strategy Interface
-interface PalindromeStrategy {
-    boolean checkPalindrome(String input);
-}
+public class UseCase13PalindromePerformanceComparison {
 
-// Stack Strategy Implementation
-class StackStrategy implements PalindromeStrategy {
-
-    public boolean checkPalindrome(String input) {
+    // Method 1: Stack Based Palindrome
+    public static boolean stackPalindrome(String input) {
 
         String str = input.replaceAll("\\s+", "").toLowerCase();
-
         Stack<Character> stack = new Stack<>();
 
         for (char c : str.toCharArray()) {
@@ -19,22 +13,17 @@ class StackStrategy implements PalindromeStrategy {
         }
 
         String reversed = "";
-
         while (!stack.isEmpty()) {
             reversed += stack.pop();
         }
 
         return str.equals(reversed);
     }
-}
 
-// Deque Strategy Implementation
-class DequeStrategy implements PalindromeStrategy {
-
-    public boolean checkPalindrome(String input) {
+    // Method 2: Deque Based Palindrome
+    public static boolean dequePalindrome(String input) {
 
         String str = input.replaceAll("\\s+", "").toLowerCase();
-
         Deque<Character> deque = new ArrayDeque<>();
 
         for (char c : str.toCharArray()) {
@@ -53,55 +42,56 @@ class DequeStrategy implements PalindromeStrategy {
 
         return true;
     }
-}
 
-// Context Class
-class PalindromeContext {
+    // Method 3: Recursive Palindrome
+    public static boolean recursivePalindrome(String str, int start, int end) {
 
-    private PalindromeStrategy strategy;
+        if (start >= end) {
+            return true;
+        }
 
-    public void setStrategy(PalindromeStrategy strategy) {
-        this.strategy = strategy;
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+
+        return recursivePalindrome(str, start + 1, end - 1);
     }
-
-    public boolean executeStrategy(String input) {
-        return strategy.checkPalindrome(input);
-    }
-}
-
-// Main Application
-public class UseCase12StrategyPalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Choose Algorithm:");
-        System.out.println("1. Stack Strategy");
-        System.out.println("2. Deque Strategy");
-
-        int choice = sc.nextInt();
-        sc.nextLine();
-
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        PalindromeContext context = new PalindromeContext();
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
 
-        if (choice == 1) {
-            context.setStrategy(new StackStrategy());
-        } else {
-            context.setStrategy(new DequeStrategy());
-        }
+        // Stack Performance
+        long start1 = System.nanoTime();
+        boolean result1 = stackPalindrome(input);
+        long end1 = System.nanoTime();
 
-        boolean result = context.executeStrategy(input);
+        // Deque Performance
+        long start2 = System.nanoTime();
+        boolean result2 = dequePalindrome(input);
+        long end2 = System.nanoTime();
 
-        if (result) {
-            System.out.println("The given string is a Palindrome.");
-        } else {
-            System.out.println("The given string is NOT a Palindrome.");
-        }
+        // Recursive Performance
+        long start3 = System.nanoTime();
+        boolean result3 = recursivePalindrome(normalized, 0, normalized.length() - 1);
+        long end3 = System.nanoTime();
+
+        System.out.println("\n--- Performance Comparison ---");
+
+        System.out.println("Stack Method Result: " + result1);
+        System.out.println("Execution Time: " + (end1 - start1) + " ns");
+
+        System.out.println("\nDeque Method Result: " + result2);
+        System.out.println("Execution Time: " + (end2 - start2) + " ns");
+
+        System.out.println("\nRecursive Method Result: " + result3);
+        System.out.println("Execution Time: " + (end3 - start3) + " ns");
 
         sc.close();
     }
-}
+}}
