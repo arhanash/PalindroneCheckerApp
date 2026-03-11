@@ -1,6 +1,33 @@
 import java.util.*;
 
-public class UseCase10PalindromeCheckerApp {
+class PalindromeChecker {
+
+    // Method to check palindrome
+    public boolean checkPalindrome(String input) {
+
+        // Normalize string
+        String str = input.replaceAll("\\s+", "").toLowerCase();
+
+        Stack<Character> stack = new Stack<>();
+
+        // Push characters into stack
+        for (int i = 0; i < str.length(); i++) {
+            stack.push(str.charAt(i));
+        }
+
+        // Build reversed string
+        String reversed = "";
+
+        while (!stack.isEmpty()) {
+            reversed += stack.pop();
+        }
+
+        // Compare original and reversed
+        return str.equals(reversed);
+    }
+}
+
+public class UseCase11PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
@@ -9,29 +36,12 @@ public class UseCase10PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        // Normalize string (remove spaces and convert to lowercase)
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        PalindromeChecker checker = new PalindromeChecker();
 
-        boolean isPalindrome = true;
+        boolean result = checker.checkPalindrome(input);
 
-        int start = 0;
-        int end = normalized.length() - 1;
-
-        // Compare characters
-        while (start < end) {
-
-            if (normalized.charAt(start) != normalized.charAt(end)) {
-                isPalindrome = false;
-                break;
-            }
-
-            start++;
-            end--;
-        }
-
-        // Display result
-        if (isPalindrome) {
-            System.out.println("The given string is a Palindrome (ignoring spaces and case).");
+        if (result) {
+            System.out.println("The given string is a Palindrome.");
         } else {
             System.out.println("The given string is NOT a Palindrome.");
         }
