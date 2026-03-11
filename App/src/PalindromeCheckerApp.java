@@ -1,33 +1,61 @@
 import java.util.*;
 
-class PalindromeChecker {
+public class UseCase13PalindromePerformanceComparison {
 
-    // Method to check palindrome
-    public boolean checkPalindrome(String input) {
+    // Method 1: Stack Based Palindrome
+    public static boolean stackPalindrome(String input) {
 
-        // Normalize string
         String str = input.replaceAll("\\s+", "").toLowerCase();
-
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
-        for (int i = 0; i < str.length(); i++) {
-            stack.push(str.charAt(i));
+        for (char c : str.toCharArray()) {
+            stack.push(c);
         }
 
-        // Build reversed string
         String reversed = "";
-
         while (!stack.isEmpty()) {
             reversed += stack.pop();
         }
 
-        // Compare original and reversed
         return str.equals(reversed);
     }
-}
 
-public class UseCase11PalindromeCheckerApp {
+    // Method 2: Deque Based Palindrome
+    public static boolean dequePalindrome(String input) {
+
+        String str = input.replaceAll("\\s+", "").toLowerCase();
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (char c : str.toCharArray()) {
+            deque.addLast(c);
+        }
+
+        while (deque.size() > 1) {
+
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if (front != rear) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Method 3: Recursive Palindrome
+    public static boolean recursivePalindrome(String str, int start, int end) {
+
+        if (start >= end) {
+            return true;
+        }
+
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+
+        return recursivePalindrome(str, start + 1, end - 1);
+    }
 
     public static void main(String[] args) {
 
@@ -36,15 +64,33 @@ public class UseCase11PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        PalindromeChecker checker = new PalindromeChecker();
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
 
-        boolean result = checker.checkPalindrome(input);
+        // Stack Performance
+        long start1 = System.nanoTime();
+        boolean result1 = stackPalindrome(input);
+        long end1 = System.nanoTime();
 
-        if (result) {
-            System.out.println("The given string is a Palindrome.");
-        } else {
-            System.out.println("The given string is NOT a Palindrome.");
-        }
+        // Deque Performance
+        long start2 = System.nanoTime();
+        boolean result2 = dequePalindrome(input);
+        long end2 = System.nanoTime();
+
+        // Recursive Performance
+        long start3 = System.nanoTime();
+        boolean result3 = recursivePalindrome(normalized, 0, normalized.length() - 1);
+        long end3 = System.nanoTime();
+
+        System.out.println("\n--- Performance Comparison ---");
+
+        System.out.println("Stack Method Result: " + result1);
+        System.out.println("Execution Time: " + (end1 - start1) + " ns");
+
+        System.out.println("\nDeque Method Result: " + result2);
+        System.out.println("Execution Time: " + (end2 - start2) + " ns");
+
+        System.out.println("\nRecursive Method Result: " + result3);
+        System.out.println("Execution Time: " + (end3 - start3) + " ns");
 
         sc.close();
     }

@@ -1,9 +1,9 @@
-UC11: Object-Oriented Palindrome Service
-Goal: Encapsulate palindrome logic in a class.
+UC13: Performance Comparison
+Goal: Compare the performance of different palindrome approaches.
 Flow:
-Create PalindromeChecker class
-Expose checkPalindrome() method
-Key Concepts used in UC11 (OOPS):
-Encapsulation
-Single Responsibility Principle
-Data Structure: Internal (Stack / Array)
+Run multiple algorithms
+Capture execution time
+Display results
+Key Concepts used in UC13:
+System.nanoTime()
+Algorithm comparison
