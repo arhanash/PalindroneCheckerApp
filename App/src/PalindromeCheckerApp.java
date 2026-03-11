@@ -1,6 +1,83 @@
 import java.util.*;
 
-public class UseCase7DequePalindromeCheckerApp {
+class Node {
+    char data;
+    Node next;
+
+    Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class UseCase8LinkedListPalindromeCheckerApp {
+
+    // Insert node at end
+    public static Node insert(Node head, char data) {
+        Node newNode = new Node(data);
+
+        if (head == null) {
+            return newNode;
+        }
+
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+        return head;
+    }
+
+    // Reverse linked list
+    public static Node reverse(Node head) {
+        Node prev = null;
+        Node current = head;
+        Node next = null;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev;
+    }
+
+    // Check palindrome
+    public static boolean isPalindrome(Node head) {
+
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        Node slow = head;
+        Node fast = head;
+
+        // Find middle
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node secondHalf = reverse(slow);
+        Node firstHalf = head;
+
+        // Compare both halves
+        while (secondHalf != null) {
+
+            if (firstHalf.data != secondHalf.data) {
+                return false;
+            }
+
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        return true;
+    }
 
     public static void main(String[] args) {
 
@@ -9,32 +86,16 @@ public class UseCase7DequePalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        // Normalize input (remove spaces and convert to lowercase)
         input = input.replaceAll("\\s+", "").toLowerCase();
 
-        Deque<Character> deque = new ArrayDeque<>();
+        Node head = null;
 
-        // Insert characters into deque
+        // Convert string to linked list
         for (int i = 0; i < input.length(); i++) {
-            deque.addLast(input.charAt(i));
+            head = insert(head, input.charAt(i));
         }
 
-        boolean isPalindrome = true;
-
-        // Compare front and rear characters
-        while (deque.size() > 1) {
-
-            char front = deque.removeFirst();  // remove from front
-            char rear = deque.removeLast();    // remove from rear
-
-            if (front != rear) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        // Display result
-        if (isPalindrome) {
+        if (isPalindrome(head)) {
             System.out.println("The given string is a Palindrome.");
         } else {
             System.out.println("The given string is NOT a Palindrome.");
